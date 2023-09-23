@@ -12,7 +12,10 @@
         "ms-vscode-remote.remote-containers",
         "ms-kubernetes-tools.vscode-kubernetes-tools",
         "esbenp.prettier-vscode",
-        "SonarSource.sonarlint-vscode"
+        "SonarSource.sonarlint-vscode",
+        "bradlc.vscode-tailwindcss",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
