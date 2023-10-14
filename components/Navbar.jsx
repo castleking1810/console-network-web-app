@@ -18,7 +18,13 @@ import { Badge } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { popoverClasses } from "@mui/material/Popover";
 
-// navigation bar item
+/**
+ * This component creates a new item in the site navigation bar
+ *
+ * @param {Object} props - The component's properties.
+ * @param {Object} props.page - The title of the component.
+ * @returns {JSX.Element} React component
+ */
 const NavbarItem = ({ page }) => {
   let currentlyHovering = false;
 
@@ -80,8 +86,7 @@ const NavbarItem = ({ page }) => {
       >
         {page.menu.map((setting) => (
           <MenuItem key={"menuitem-" + setting.name}>
-            {/* TODO: update routes for menu items */}
-            <Link href={page.path} passHref>
+            <Link href={page.path + setting.path} passHref>
               <Typography textAlign="center">{setting.name}</Typography>
             </Link>
           </MenuItem>
@@ -91,7 +96,11 @@ const NavbarItem = ({ page }) => {
   );
 };
 
-// navigation bar
+/**
+ * This component creates the navigation bar for the site
+ *
+ * @returns {JSX.Element} React component
+ */
 export const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -109,17 +118,17 @@ export const Navbar = () => {
       name: "Store",
       path: "/store",
       menu: [
-        { name: "Featured", path: "/featured" },
-        { name: "WishList", path: "/wishlist/[userid]" },
+        { name: "Featured", path: "" },
+        { name: "WishList", path: "" },
       ],
     },
     {
       name: "Library",
       path: "/library",
       menu: [
-        { name: "Home", path: "/" },
-        { name: "Collections", path: "/collections" },
-        { name: "Downloads", path: "/downloads" },
+        { name: "Home", path: "" },
+        { name: "Collections", path: "" },
+        { name: "Downloads", path: "" },
       ],
     },
   ];
