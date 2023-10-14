@@ -16,6 +16,80 @@ import { SportsEsports } from "@mui/icons-material";
 import Link from "next/link";
 import { Badge } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { popoverClasses } from "@mui/material/Popover";
+
+// navigation bar item
+const NavbarItem = ({ page }) => {
+  let currentlyHovering = false;
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  function handleClick(event) {
+    if (anchorEl !== event.currentTarget) {
+      setAnchorEl(event.currentTarget);
+    }
+  }
+
+  function handleHover() {
+    currentlyHovering = true;
+  }
+
+  function handleCloseHover() {
+    currentlyHovering = false;
+    setTimeout(() => {
+      if (!currentlyHovering) {
+        setAnchorEl(null);
+      }
+    }, 50);
+  }
+
+  return (
+    <div key={"div-" + page.name} className="mr-2">
+      <Link
+        href={page.path}
+        key={"link-" + page.name}
+        passHref
+        onMouseOver={handleClick}
+        onMouseLeave={handleCloseHover}
+      >
+        <Button
+          key={page.name}
+          sx={{ my: 2, color: "white", display: "block" }}
+        >
+          {page.name}
+        </Button>
+      </Link>
+      <Menu
+        key={"menu-" + page.name}
+        sx={{
+          [`&.${popoverClasses.root}`]: { pointerEvents: "none" },
+        }}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        MenuListProps={{
+          onMouseEnter: handleHover,
+          onMouseLeave: handleCloseHover,
+          style: { pointerEvents: "auto" },
+        }}
+        getContentAnchorEl={null}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+        transformOrigin={{
+          horizontal: "center",
+          vertical: "top",
+        }}
+      >
+        {page.menu.map((setting) => (
+          <MenuItem key={"menuitem-" + setting.name}>
+            {/* TODO: update routes for menu items */}
+            <Link href={page.path} passHref>
+              <Typography textAlign="center">{setting.name}</Typography>
+            </Link>
+          </MenuItem>
+        ))}
+      </Menu>
+    </div>
+  );
+};
 
 // navigation bar
 export const Navbar = () => {
@@ -34,19 +108,19 @@ export const Navbar = () => {
     {
       name: "Store",
       path: "/store",
-      menu: {
-        Featured: "/featured",
-        WishList: "/wishlist/[userid]",
-      },
+      menu: [
+        { name: "Featured", path: "/featured" },
+        { name: "WishList", path: "/wishlist/[userid]" },
+      ],
     },
     {
       name: "Library",
       path: "/library",
-      menu: {
-        Home: "/",
-        Collections: "/collections",
-        Downloads: "/downloads",
-      },
+      menu: [
+        { name: "Home", path: "/" },
+        { name: "Collections", path: "/collections" },
+        { name: "Downloads", path: "/downloads" },
+      ],
     },
   ];
 
@@ -89,14 +163,7 @@ export const Navbar = () => {
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: "10" }}
           >
             {site_paths.map((page) => (
-              <Link href={page.path} key={page.name} passHref>
-                <Button
-                  key={page.name}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page.name}
-                </Button>
-              </Link>
+              <NavbarItem key={page.name} page={page}></NavbarItem>
             ))}
           </Box>
 
@@ -104,7 +171,7 @@ export const Navbar = () => {
             size="medium"
             aria-label="show 17 new notifications"
             color="inherit"
-            className="mr-5"
+            sx={{ mr: "15px" }}
           >
             <Badge badgeContent={17} color="error">
               <NotificationsIcon />
