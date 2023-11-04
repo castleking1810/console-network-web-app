@@ -7,18 +7,17 @@
   "customizations": {
     "vscode": {
       "extensions": [
-		"github.vscode-github-actions",
-		"vscode-icons-team.vscode-icons",
-		"ms-vscode-remote.remote-containers",
-		"ms-kubernetes-tools.vscode-kubernetes-tools",
-		"esbenp.prettier-vscode",
-		"SonarSource.sonarlint-vscode",
-		"bradlc.vscode-tailwindcss",
-		"Gruntfuggly.todo-tree",
-    "redhat.vscode-yaml",
-    "ms-azuretools.vscode-docker"
-	]
-
+        "github.vscode-github-actions",
+        "vscode-icons-team.vscode-icons",
+        "ms-vscode-remote.remote-containers",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "esbenp.prettier-vscode",
+        "SonarSource.sonarlint-vscode",
+        "bradlc.vscode-tailwindcss",
+        "Gruntfuggly.todo-tree",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker"
+      ]
     }
   },
 
@@ -29,7 +28,15 @@
   "forwardPorts": [3000],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "npm install"
+  "postCreateCommand": "npm install",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": true,
+      "installDockerBuildx": true,
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    }
+  }
 
   // Configure tool-specific properties.
   // "customizations": {},
